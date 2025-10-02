@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jquery</title>
+  </head>
+  <script></script>
+  <style>
+    .flex {
+      text-align: center;
+    }
+  </style>
+  <body>
+    <header>
+      <h2>Ejercicio 1</h2>
+    </header>
+    <main>
+      <!-- Ejercicio 3: Comprobador de caracteres en tiempo real -->
+
+      <div class="flex">
+        <label for="textArea">Introduce el texto:</label>
+        <textarea name="" id="texto"></textarea>
+        <p id="resul"></p>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="../js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#texto").on("input", function () {
+        $("#resul").text('Tiene: ' + $("#texto").val().length + ' caracter/es');
+      });
+    });
+  </script>
+</html>
