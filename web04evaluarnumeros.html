@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<script>
+    
+</script>
+<style>
+    .flex{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    #resultado{
+        border: none;
+    }
+</style>
+<body>
+    <header>
+        <h2>Practica</h2>
+    </header>
+    <main>
+        <div class="flex">
+        <label for="num1">Primer número:</label>
+        <input type="number" id="num1" class="num">
+        <label for="num2">Segundo número:</label>
+        <input type="number" id="num2" class="num">
+        <label for="num3">Tercer número:</label>
+        <input type="number" id="num3" class="num">  
+        <button class="btn evaluar">Evaluar</button>
+        </div>
+        <div class="flex">
+          
+            <p>El mayor:</p>
+            <p class="mayor"></p>
+            <p>El intermedio:</p>
+            <p class="intermedio"></p>
+            <p>El menor:</p>
+            <p class="menor"></p>
+      
+    </main>
+    <footer>
+
+    </footer>
+</body>
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+ 
+ //Primera forma
+    $(document).ready(function(){
+        $(".evaluar").click(function(){
+            let mayor;
+            let intermedio;
+            let menor;
+
+            let num1 = parseFloat($("#num1").val());
+            let num2 = parseFloat($("#num2").val());
+            let num3 = parseFloat($("#num3").val());
+
+            if ((num1 >= num2) && (num1 >= num3)) {
+            mayor = num1;
+            if (num2 >= num3) {
+                intermedio = num2;
+                menor = num3;
+            } else {
+                intermedio = num3;
+                menor = num2;
+            }
+            } else if ((num2 >= num1) && (num2 >= num3)) {
+            mayor = num2;
+            if (num1 >= num3) {
+                intermedio = num1;
+                menor = num3;
+            } else {
+                intermedio = num3;
+                menor = num1;
+            }
+            } else if ((num3 >= num1) && (num3 >= num2)) {
+            mayor = num3;
+            if (num1 >= num2) {
+                intermedio = num1;
+                menor = num2;
+            } else {
+                intermedio = num2;
+                menor = num1;
+            }
+            }
+
+            $(".mayor").text(mayor);
+            $(".intermedio").text(intermedio);
+            $(".menor").text(menor);
+
+        });
+    });
+
+
+    //Segunda forma
+
+    $(document).ready(function(){
+        $(".evaluar").click(function(){
+            let numeros = [];
+            numeros.push(parseFloat($("#num1").val()));
+            numeros.push(parseFloat($("#num2").val()));
+            numeros.push(parseFloat($("#num3").val()));
+
+            numeros.sort(function(a, b){return a - b});
+
+            $(".menor").text(numeros[0]);
+            $(".intermedio").text(numeros[1]);
+            $(".mayor").text(numeros[2]);
+
+        });
+    });
+
+   
+</script>
+</html>
