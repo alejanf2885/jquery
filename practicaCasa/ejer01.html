@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+    
+</head>
+<script>
+    
+</script>
+<style>
+    .flex {
+       
+    }
+ 
+</style>
+<body>
+    <header>
+        <h2>Ejercicio 1</h2>
+    </header>
+    <main>
+        <!-- Ejercicio 1: Dar de input un nombre y un boton para que se imprima un saludo -->
+
+        <div class="flex">
+            <label for="nombre">Introduce tu nombre</label>
+            <input type="text" id="nombre">
+            <button id="saludar">Saludar</button>
+            <p id="saludo"></p>
+
+        </div>
+      
+    </main>
+    <footer>
+
+    </footer>
+</body>
+<script src="../js/jquery-3.7.1.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#saludar").click(function(){
+            let nombre = $("#nombre").val();
+            console.log(nombre)
+            if(nombre.length <= 0) {
+                nombre = "Introduce un nombre antes"
+                $("#saludo").text(nombre)
+            }else {
+                 $("#saludo").text("Hola " + nombre + "!!!")
+            }
+
+
+
+        })
+    })
+    
+   
+</script>
+</html>

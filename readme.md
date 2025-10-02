@@ -1,1 +1,1 @@
-Hola esto es un ejemplo
+Ejercicios de clase
