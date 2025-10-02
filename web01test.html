@@ -9,18 +9,45 @@
 <script>
     
 </script>
+<style>
+    .rojo{
+        color:red;
+    }   
+</style>
 <body>
     <header>
-        <h1>Jquery</h1>
+        <h2>Jquery</h2>
     </header>
     <main>
-        
+      <button class="monstrar">monstrar</button>
+      <button class="ocultar">ocultar</button>
+      
     </main>
     <footer>
 
     </footer>
 </body>
+<script src="js/jquery-3.7.1.js"></script>
 <script>
-
+ 
+    $(document).ready(function(){
+        $(".monstrar").click(function(){
+            $(".monstrado").show(function(){
+                console.log("se mostro");
+               $(this).addClass("rojo"); 
+               console.log("se agrego la clase");
+               
+            });
+            
+        });
+        $(".ocultar").click(function(){
+            $(".monstrado").hide(function(){
+                console.log("se oculto");
+               $(this).removeClass("rojo");
+               console.log("se quito la clase");
+            });
+        });
+    });
+   
 </script>
 </html>

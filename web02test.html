@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jquery</title>
+  </head>
+  <script></script>
+  <style>
+    .img-style {
+      width: 300px;
+      height: 200px;
+      cursor: pointer;
+    }
+
+    header,
+    footer {
+      text-align: center;
+      padding: 10px;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .btn {
+      padding: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 1px solid black;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background-color: lightgray;
+      transition: all 0.3s;
+    }
+    .rotate {
+      transform: rotate(360deg);
+      transition: transform 0.6s;
+    }
+  </style>
+  <body>
+    <header>
+      <h2>Jquery</h2>
+    </header>
+    <main>
+      <button class="cambiar btn">Cambiar imagen</button>
+      <img class="img img-style" src="imgs/img1.png" alt="" />
+      <p class="contador-cambio"></p>
+      <p class="contador-pasada"></p>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      let foto1 = "imgs/img1.png";
+      let foto2 = "imgs/img2.png";
+      let contador = 0;
+
+      let estado = true; //true = foto1, false = foto2
+      $(".cambiar").click(function () {
+        if (estado) {
+          $(".img").attr("src", foto2);
+          estado = false;
+        } else {
+          $(".img").attr("src", foto1);
+          estado = true;
+        }
+      });
+    });
+    $(document).ready(function () {
+      let contadorCambio = 0;
+      let contadorPasada = 0;
+      $(".img").mouseover(function () {
+        contadorPasada++;
+        $(".contador-pasada").text(
+          "Has pasado el ratón sobre la imagen " + contadorPasada + " veces"
+        );
+      });
+      $(".cambiar").click(function () {
+        contadorCambio++;
+        $(".contador-cambio").text(
+          "Has cambiado la imagen " + contadorCambio + " veces"
+        );
+      });
+    });
+
+    $(document).ready(function () {
+      $(".cambiar").click(function () {
+        $(this).toggleClass("rotate");
+      });
+    });
+  </script>
+</html>
