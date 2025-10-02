@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script></script>
+  <style>
+    .flex {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #resultado {
+      border: none;
+    }
+  </style>
+  <body>
+    <header>
+      <h2>Jquery</h2>
+    </header>
+    <main>
+      <div class="flex">
+        <label for="num1">Primer número:</label>
+        <input type="number" id="num1" class="num" />
+        <p>x</p>
+        <label for="num2">Segundo número:</label>
+        <input type="number" id="num2" class="num" />
+        <p>=</p>
+        <input type="text" id="resultado" disabled />
+        <button class="btn multiplicar">multiplicar</button>
+        <p class="error" style="color: red"></p>
+      </div>
+       <input type="number" id="tablaNum" />
+      <div class="flex">
+        <!--Ejemplo de etiqueta html-->
+
+       
+        <table id="tabla" style="border: 1px solid black">
+          <caption>Tabla de multiplicar</caption>
+          <thead>
+            <tr>
+              <th>Número</th>
+              <th>x</th>
+              <th>i</th>
+              <th>=</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      let num1;
+      let num2;
+      let resultado;
+      $(".multiplicar").click(function () {
+        num1 = parseFloat($("#num1").val());
+        num2 = parseFloat($("#num2").val());
+        if (isNaN(num1) || isNaN(num2)) {
+          $(".error").text("Introduce los dos numeros");
+        } else {
+          resultado = num1 * num2;
+          $("#resultado").val(resultado);
+          $(".error").text("");
+        }
+      });
+    });
+    // Crear tabla de multiplicar
+    // Tabla de multiplicar dinámica
+    $(document).ready(function () {
+      $("#tablaNum").on("input", function () {
+        const n = parseInt($(this).val(), 10);
+        const $tbody = $("#tabla tbody");
+        $tbody.empty();
+        if (isNaN(n)) {
+          return; // No mostrar nada si está vacío o no es número
+        }
+        // Generar filas 1..10
+        for (let i = 1; i <= 10; i++) {
+          const resultado = n * i;
+            $tbody.append(
+            `<tr>
+              <td>${n}</td>
+              <td>x</td>
+              <td>${i}</td>
+              <td>=</td>
+              <td>${resultado}</td>
+            </tr>`
+          );
+        }
+      });
+    });
+  </script>
+</html>
