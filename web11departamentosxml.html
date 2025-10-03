@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #departamentos .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+  </style>
+  <body>
+    <div class="flex">
+        <h1>Lista de departamentos</h1>
+    <button id="leer">Leer XML departamentos</button>
+    </div>
+    
+    <div id="departamentos">
+      <table id="">
+        <thead>
+          <tr>
+            <th>NUMERO</th>
+            <th>NOMBRE</th>
+            <th>LOCALIDAD</th>
+          </tr>
+        </thead>
+        <tbody id="tabladepartamentos"></tbody>
+      </table>
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+        console.log('entrando');
+      $("#leer").click(function () {
+        $.get("documents/departamentos.xml", function (data) {
+            console.log('leyendo');
+            let html = '';
+            console.log(data);
+
+            $(data).find('DEPT').each(function(){
+                let numeroDept = $(this).attr('DEPT_NO')
+                let nombreDept = $(this).find('DNOMBRE').first().text()
+                let localidadDept = $(this).find('LOC').first().text()
+
+                console.log(numeroDept, nombreDept, localidadDept);
+                html += `<tr>
+                            <td>${numeroDept}</td>
+                            <td>${nombreDept}</td>
+                            <td>${localidadDept}</td>
+                        </tr>`
+               
+            });
+
+            $("#tabladepartamentos").html(html);
+        });
+      });
+    });
+  
+
+
+
+         
+  </script>
+</html>

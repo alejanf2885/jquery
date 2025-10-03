@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <label for="">Introducir ID:</label>
+    <input type="text" id="cajaid" />
+    <div class="">
+      <p id="nombre"></p>
+      <p id="localidad"></p>
+    </div>
+    <label for="">Introducir Localidad:</label>
+    <input type="text" id="cajalocalidad" />
+    <div class="">
+      <ul id="listLoc">
+
+      </ul>
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#cajaid").change(function () {
+        $.get("documents/departamentos.xml", function (data) {
+          console.log("leyendo");
+
+          //Filtro DEPT[DEPT_NO=X]
+          let valor = parseInt($("#cajaid").val());
+          let filtro = "DEPT[DEPT_NO=" + valor + "]";
+          let nodedept = $(data).find(filtro).first();
+
+          let nombre = $(nodedept).find("DNOMBRE").text();
+          let localidad = $(nodedept).find("LOC").text();
+
+          $("#nombre").text(nombre);
+          $("#localidad").text(localidad);
+        });
+      });
+    });
+
+    $(document).ready(function () {
+      $("#cajalocalidad").change(function () {
+        let html = ''
+        $.get("documents/departamentos.xml", function (data) {
+            let localidadfil = $('#cajalocalidad').val().toUpperCase();
+            
+            $(data).find('DEPT').each(function(){
+                let filter = 'LOC:contains('+ localidadfil + ')'
+                let html = ''
+                $(this).find(filter).each(function(){
+                    
+                    console.log($(this).text())
+
+
+                })
+
+            })
+          
+            
+           
+            
+
+
+        });
+      });
+    });
+  </script>
+</html>
