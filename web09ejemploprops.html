@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Introduce el rango</h1>
+    <input type="range" name="rango" id="rango" min="0" max="10" step="1" />
+    <span id="valorRango">0</span>
+
+    <div id="contenedor"></div>
+    <h1 id="resul">0</h1>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#rango").change(function () {
+         $("#resul").text(0);
+
+        let elementos = parseInt($("#rango").val());
+        $("#valorRango").text(elementos);
+        $("#contenedor").text("");
+        for (let i = 1; i <= elementos; i++) {
+          let aleatorio = parseInt(Math.random() * 10 + 1);
+          let chk = $("<input>", {
+            type: "checkbox",
+            value: aleatorio,
+          });
+          let label = $("<label>", { text: aleatorio });
+          $("#contenedor").append(chk);
+          $("#contenedor").append(label);
+          chk.change(function () {
+            // let resultado = parseInt($("#resul").text());
+            // let valor = parseInt($(this).val());
+
+            // if ($(this).is(":checked") == true) {
+            //   resultado += valor;
+            // } else {
+            //   resultado -= valor;
+            // }
+            // $("#resul").text(resultado);
+
+            let suma = 0;
+            $("input[type='checkbox']:checked").each(function () {
+              suma += parseInt($(this).val());
+            });
+            $("#resul").text(suma);
+          });
+        }
+      });
+    });
+  </script>
+</html>
