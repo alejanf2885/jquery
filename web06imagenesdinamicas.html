@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script></script>
+  <style>
+    .img-style {
+      width: 200px;
+      height: 200px;
+      margin: 5px 5px;
+      border: 5px black;
+    }
+
+    .flex{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+    }
+  </style>
+  <body>
+    <header>
+     
+    </header>
+    <main>
+      <label for="caja">Introduce un rango</label>
+      <input type="range" name="" id="rango" max="10" min="0" step="1" />
+
+      <hr />
+
+      <div id="contenedor" class="flex"></div>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#rango").on("change", function () {
+        let valor = parseFloat($(this).val());
+        $("#contenedor").html("");
+        for (let i = 1; i <= valor; i++) {
+          console.log(i);
+          let imagen = $("<img>");
+          imagen.attr("src", "imgs/img1.png");
+          imagen.attr("class", "img-style");
+
+         imagen.mouseenter(function(){
+
+              imagen.attr("src", "imgs/img2.png");
+
+         })
+         imagen.mouseleave(function(){
+
+              imagen.attr("src", "imgs/img1.png");
+
+         })
+
+
+          $("#contenedor").append(imagen);
+        }
+      });
+    });
+  </script>
+</html>

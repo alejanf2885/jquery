@@ -130,6 +130,9 @@
       font-size: 1.02rem;
       margin-bottom: 1.5rem;
     }
+    .error{
+      text-align: center;
+    }
   </style>
   <body>
     <main class="flex">
@@ -153,14 +156,30 @@
   <script>
     $(document).ready(function () {
       $("#iniciar").click(function () {
+        let email = $("#email").val().trim();
+        let password = $("#password").val().trim();
 
-        if ($("#check").prop("checked") == false) {
+        
+        if(email.length() <= 0 ){
+           $(".error")
+            .text("Introduce un email")
+            .css("color", "red");
+        } else if(password.length() <= 0 ){
+           $(".error")
+            .text("Introduce una contraseña")
+            .css("color", "red");
+        } else if ($("#check").prop("checked") == false ) {
           $(".error")
             .text("Debes aceptar los terminos y condiciones")
             .css("color", "red");
-        } else {
-          $(".error").text("Entrando").css("color", "green");
+         } else {
+           $(".error")
+            .text("Entrando")
+            .css("color", "green");
         }
+        
+
+
       });
     });
   </script>

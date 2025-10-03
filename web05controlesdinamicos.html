@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script></script>
+  <style></style>
+  <body>
+    <header>
+      <h2>Jquery</h2>
+    </header>
+    <main>
+      <label for="caja">Introduc un texto</label>
+      <input type="text" id="caja" />
+      <button id="generarControl">General control</button>
+      <hr />
+
+      <div id="contenedor"></div>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#generarControl").click(function () {
+        let texto = $("#caja").val();
+
+        let parrafo = $('<p>');
+        parrafo
+            .text(texto)
+            .css('color', 'red');
+
+        $("#contenedor").append(parrafo);
+
+        parrafo.click(function(){
+            $(this).text('pulsado').css('color','blue')
+        })
+
+        // $("#contenedor").append($("<p>").text(texto).css("color", "red")); otra forma
+      });
+    });
+  </script>
+</html>
