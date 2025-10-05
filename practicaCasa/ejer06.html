@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de empleados</title>
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+      }
+
+      .list {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        border: none;
+        padding: 32px 48px;
+        min-width: 350px;
+        max-width: 420px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2d3a4b;
+        margin-bottom: 32px;
+        font-size: 2rem;
+      }
+
+      .empleado {
+        background: #f4f8fb;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        box-shadow: 0 2px 8px rgba(102,166,255,0.08);
+        transition: box-shadow 0.2s;
+      }
+      .empleado:hover {
+        box-shadow: 0 4px 16px rgba(102,166,255,0.18);
+      }
+      .empleado h2 {
+        margin: 0 0 8px 0;
+        color: #3a7bd5;
+        font-size: 1.2rem;
+      }
+      .empleado p {
+        margin: 2px 0;
+        color: #444;
+        font-size: 1rem;
+      }
+      .empleados {
+        margin-top: 10px;
+      }
+      .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        background: #eaf3fa;
+        border-radius: 10px;
+        padding: 12px 18px 12px 18px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(102,166,255,0.08);
+      }
+      .search {
+        padding: 7px 18px;
+        border-radius: 8px;
+        border: none;
+        background: linear-gradient(90deg, #66a6ff 0%, #89f7fe 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(102,166,255,0.10);
+        transition: box-shadow 0.2s, background 0.2s;
+      }
+      .search:hover {
+        cursor: pointer;
+        background: linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%);
+        box-shadow: 0 4px 16px rgba(102,166,255,0.18);
+      }
+      .filters input[type="text"] {
+        flex: 1;
+        padding: 7px 12px;
+        border-radius: 8px;
+        border: 1px solid #b3c6e0;
+        font-size: 1rem;
+        outline: none;
+        transition: all border 0.2s, box-shadow 0.2s;
+      }
+      .filters input[type="text"]:focus {
+        border: 1.5px solid #66a6ff;
+        box-shadow: 0 2px 8px rgba(102,166,255,0.10);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="list">
+      <h1>Lista de empleados</h1>
+      <div class="filters">
+        <button id="search" class="search">Search</button>
+        <input type="text">
+      </div>
+      <div class="empleados">
+
+      </div>
+    </div>
+  </body>
+  <script src="../js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function(){
+        $.get("../documents/empleadosv2.xml", function (data) {
+          let html = ''
+
+           $(data).find('EMPLEADO').each(function(){
+
+            let name = $(this).find('NOMBRE');
+            let cargo = $(this).find('CARGO');
+            let salario = $(this).find('SALARIO');
+            let ciudad = $(this).find('CIUDAD');
+
+            
+            html += '<div class="empleado">';
+            html += '<h2>' + name.text() + '</h2>';
+            html += '<p>' + cargo.text() + '</p>';
+            html += '<p>' + salario.text() + '</p>';
+            html += '<p>' + ciudad.text() + '</p>';
+            html += '</div>';
+        
+    
+           });
+           $('.empleados').html(html)
+
+
+        });
+
+
+    });
+
+
+    //Mejorar logica cuando cambie el texto del input se busca por eso si no se muestra todo
+    //Ir filtrando
+
+
+  </script>
+</html>

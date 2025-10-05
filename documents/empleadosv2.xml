@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EMPRESAS>
+  <EMPRESA nombre="TechNova">
+    <EMPLEADO id="101">
+      <NOMBRE>Alejandro Navarro</NOMBRE>
+      <CARGO>Desarrollador Web</CARGO>
+      <SALARIO>2500</SALARIO>
+      <CIUDAD>Elche</CIUDAD>
+    </EMPLEADO>
+    <EMPLEADO id="102">
+      <NOMBRE>Lucía Torres</NOMBRE>
+      <CARGO>Diseñadora UX</CARGO>
+      <SALARIO>2300</SALARIO>
+      <CIUDAD>Madrid</CIUDAD>
+    </EMPLEADO>
+    <EMPLEADO id="103">
+      <NOMBRE>Javier Gómez</NOMBRE>
+      <CARGO>Administrador de Sistemas</CARGO>
+      <SALARIO>2700</SALARIO>
+      <CIUDAD>Granada</CIUDAD>
+    </EMPLEADO>
+  </EMPRESA>
+
+  <EMPRESA nombre="DataCorp">
+    <EMPLEADO id="201">
+      <NOMBRE>Laura Pérez</NOMBRE>
+      <CARGO>Analista de Datos</CARGO>
+      <SALARIO>2600</SALARIO>
+      <CIUDAD>Sevilla</CIUDAD>
+    </EMPLEADO>
+    <EMPLEADO id="202">
+      <NOMBRE>David Romero</NOMBRE>
+      <CARGO>Programador Backend</CARGO>
+      <SALARIO>2400</SALARIO>
+      <CIUDAD>Madrid</CIUDAD>
+    </EMPLEADO>
+    <EMPLEADO id="203">
+      <NOMBRE>Sara López</NOMBRE>
+      <CARGO>QA Tester</CARGO>
+      <SALARIO>2200</SALARIO>
+      <CIUDAD>Elche</CIUDAD>
+    </EMPLEADO>
+  </EMPRESA>
+
+  <EMPRESA nombre="CloudIT">
+    <EMPLEADO id="301">
+      <NOMBRE>Manuel Díaz</NOMBRE>
+      <CARGO>DevOps Engineer</CARGO>
+      <SALARIO>3000</SALARIO>
+      <CIUDAD>Valencia</CIUDAD>
+    </EMPLEADO>
+    <EMPLEADO id="302">
+      <NOMBRE>Paula Sánchez</NOMBRE>
+      <CARGO>Project Manager</CARGO>
+      <SALARIO>3100</SALARIO>
+      <CIUDAD>Madrid</CIUDAD>
+    </EMPLEADO>
+  </EMPRESA>
+</EMPRESAS>
+    
