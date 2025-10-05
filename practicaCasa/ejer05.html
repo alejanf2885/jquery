@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To Do List</title>
+  <style>
+    body {
+      background: #f4f6fb;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 50px;
+    }
+
+    .flex {
+      text-align: center;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #1976d2;
+      margin-bottom: 1rem;
+    }
+
+    .add {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .add input {
+      flex: 1;
+      padding: 0.5rem 0.7rem;
+      border: 1.5px solid #b6c7e3;
+      border-radius: 6px;
+      outline: none;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    .add input:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px #bbdefb;
+    }
+
+    .add button {
+      padding: 0.5rem 1rem;
+      background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .add button:hover {
+      background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+      transform: scale(1.05);
+    }
+
+    .list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      background: #f0f4ff;
+      transition: background 0.2s;
+    }
+
+    .list li:hover {
+      background: #e3f0ff;
+    }
+
+    .list li p {
+      margin: 0;
+      word-break: break-word;
+      flex: 1;
+      text-align: left;
+    }
+
+    .list li button.remove {
+      padding: 0.3rem 0.6rem;
+      border: none;
+      border-radius: 5px;
+      background: #ef5350;
+      color: white;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s, transform 0.1s;
+      margin-left: 0.5rem;
+    }
+
+    .list li button.remove:hover {
+      background: #d32f2f;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="flex">
+    <h2>To Do List</h2>
+    <div class="add">
+      <input type="text" id="nameTask" placeholder="Titulo de la tarea" />
+      <button id="add">Añadir tarea</button>
+    </div>
+    <div class="list">
+      <ul></ul>
+    </div>
+  </div>
+
+  <script src="../js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Añadir tarea
+      $("#add").click(function () {
+        let task = $("#nameTask").val();
+        if (task !== "") {
+          $(".list ul").append(
+            "<li><p>" + task + "</p><button class='remove'>Eliminar</button></li>"
+          );
+          $("#nameTask").val("");
+        }
+      });
+
+      // Eliminar tarea
+      $(document).on("click", ".remove", function() {
+        $(this).parent().remove()
+      })
+     
+    });
+  </script>
+</body>
+</html>
