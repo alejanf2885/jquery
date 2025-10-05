@@ -15,9 +15,7 @@
     <label for="">Introducir Localidad:</label>
     <input type="text" id="cajalocalidad" />
     <div class="">
-      <ul id="listLoc">
-
-      </ul>
+      <ul id="listLoc"></ul>
     </div>
   </body>
   <script src="js/jquery-3.7.1.js"></script>
@@ -43,27 +41,26 @@
 
     $(document).ready(function () {
       $("#cajalocalidad").change(function () {
-        let html = ''
+        console.log("Entroo");
+        let html = "";
         $.get("documents/departamentos.xml", function (data) {
-            let localidadfil = $('#cajalocalidad').val().toUpperCase();
-            
-            $(data).find('DEPT').each(function(){
-                let filter = 'LOC:contains('+ localidadfil + ')'
-                let html = ''
-                $(this).find(filter).each(function(){
-                    
-                    console.log($(this).text())
+          let localidadfil = $("#cajalocalidad").val().toUpperCase();
 
+          $(data)
+            .find("DEPT")
+            .each(function () {
+              let loc = $(this).find("LOC").first().text();
 
-                })
+              if (loc.includes(localidadfil)) {
+                console.log("entro al if");
 
-            })
-          
-            
-           
-            
-
-
+                html += "<li>" + $(this).find("DNOMBRE").text() + "</li>";
+              }
+            });
+          if (html == "") {
+            html = "<li>No se encontraron departamentos.</li>";
+          }
+          $("#listLoc").html(html);
         });
       });
     });
