@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 30px;
+    }
+
+    button#load {
+        display: block;
+        margin: 30px auto 20px auto;
+        padding: 12px 28px;
+        background: #2980b9;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    button#load:hover {
+        background: #1c5980;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        padding: 30px 24px;
+    }
+
+    .container p {
+        margin: 8px 0;
+        padding: 8px 12px;
+        background: #ecf0f1;
+        border-radius: 4px;
+        font-size: 1em;
+        color: #34495e;
+    }
+
+    .container p:nth-child(3n-2) {
+        font-weight: bold;
+        background: #d6eaf8;
+    }
+
+    .container p:nth-child(3n-1) {
+        color: #2980b9;
+    }
+
+    .container p:nth-child(3n) {
+        color: #16a085;
+    }
+</style>
+<body>
+    <h1>Departamentos XML service</h1>
+    <button id="load">Cargar datos</button>
+    <div class="container">
+
+    </div>
+</body>
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+
+    $(document).ready(function(){
+        $('#load').click(function(){
+
+            let url = 'https://apicruddepartamentosxml.azurewebsites.net'
+            let request = '/api/Departamentos'
+
+            $.get(url + request,function(data){
+                let html = ''
+                $(data)
+                .find('Departamento')
+                .each(function(){
+                    let idDepartamento = $(this).find('IdDepartamento').first().text()
+                    let nombre = $(this).find('Nombre').first().text()
+                    let localidad = $(this).find('Localidad').first().text()
+
+
+                    html += '<p>' + idDepartamento + '</p>'
+                    html += '<p>' + nombre + '</p>'
+                    html += '<p>' + localidad + '</p>'
+                    
+                })
+
+                $('.container').html(html)
+
+            })
+        })
+    })
+
+</script>
+</html>
