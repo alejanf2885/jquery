@@ -132,17 +132,14 @@
     //   });
     // });
 
-
-
-
     $(document).ready(function () {
       $("#listEmp").change(function () {
         let valorSeleccionado = $("#listEmp").val();
-        let requestClient = '/api/Clientes/' + valorSeleccionado
+        let requestClient = "/api/Clientes/" + valorSeleccionado;
 
         $.get(url + request, function (data) {
           $(data)
-            .find('CLIENTE')
+            .find("CLIENTE")
             .each(function () {
               let nombre = $(this).find("NOMBRE").first().text();
               let direccion = $(this).find("DIRECCION").first().text();
@@ -151,23 +148,17 @@
               let paginaweb = $(this).find("PAGINAWEB").first().text();
               let img = $(this).find("IMAGENCLIENTE").first().text();
 
-              let $nombre = $("<p>");
-              $nombre.text(nombre);
+              let $nombre = $("<p>", { text: nombre });
 
-              let $direccion = $("<p>");
-              $direccion.text(direccion);
+              let $direccion = $("<p>", { text: direccion });
 
-              let $email = $("<p>");
-              $email.text(email);
+              let $email = $("<p>", { text: email });
 
-              let $codigopostal = $("<p>");
-              $codigopostal.text(codigopostal);
+              let $codigopostal = $("<p>", { text: codigopostal });
 
-              let $paginaweb = $("<p>");
-              $paginaweb.text(paginaweb);
+              let $paginaweb = $("<p>", { text: paginaweb });
 
-              let $img = $("<img>");
-              $img.attr("src", img);
+              let $img = $("<img>", { src: img });
 
               $("#details").empty();
               $("#details").append(

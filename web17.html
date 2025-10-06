@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clientes</title>
+  </head>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      padding: 32px 24px;
+    }
+
+    .listButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+      justify-content: center;
+    }
+
+    .cliente-btn {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 6px rgba(25, 118, 210, 0.08);
+    }
+
+    .cliente-btn:hover,
+    .cliente-btn:focus {
+      background: #1565c0;
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .details {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .details p {
+      margin: 8px 0;
+      font-size: 1.08rem;
+      color: #333;
+    }
+
+    .details img {
+      margin-top: 14px;
+      max-width: 160px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 2px solid #e3eaf2;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="listButtons"></div>
+      <div class="details"></div>
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    let url = "https://apiclientesxml.azurewebsites.net";
+    let request = "/api/Clientes";
+    $(document).ready(function () {
+      $.get(url + request, function (data) {
+        $(data)
+          .find("CLIENTE")
+          .each(function () {
+            let nombre = $(this).find("Nombre").text();
+            let idCliente = $(this).find("IdCliente").text();
+
+            let $button = $("<button>", {
+              "data-id": idCliente,
+              text: nombre,
+              class: "cliente-btn",
+            });
+
+            $button.click(function () {
+              console.log("entro");
+              let valorSeleccionado = $(this).attr("data-id");
+              console.log(valorSeleccionado);
+              let requestClient = "/api/Clientes/" + valorSeleccionado;
+
+              $.get(url + requestClient, function (data) {
+                console.log(url + requestClient);
+
+                let nombre = $(data).find("Nombre").text();
+                let email = $(data).find("Email").text();
+                let paginaweb = $(data).find("PaginaWeb").text();
+                let img = $(data).find("Imagen").text();
+
+                let $nombre = $("<p>", { text: nombre });
+
+                let $email = $("<p>", { text: email });
+
+                let $paginaweb = $("<p>", { text: paginaweb });
+
+                let $img = $("<img>", { src: img });
+
+                $(".details").empty();
+                $(".details").append($nombre, $email, $paginaweb, $img);
+              });
+            });
+
+            $(".listButtons").append($button);
+          });
+      });
+    });
+  </script>
+</html>
