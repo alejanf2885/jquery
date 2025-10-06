@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coches XML</title>
+  </head>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background: #fff;
+        max-width: 500px;
+        margin: 40px auto 20px auto;
+        padding: 32px 24px 24px 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    h1 {
+        color: #2d3a4b;
+        margin-bottom: 24px;
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+    select {
+        width: 80%;
+        padding: 10px 12px;
+        border-radius: 6px;
+        border: 1px solid #bfc9d1;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        background: #f8fafb;
+        transition: border 0.2s;
+    }
+
+    select:focus {
+        border: 1.5px solid #4a90e2;
+        outline: none;
+    }
+
+    .expo {
+        max-width: 500px;
+        margin: 0 auto 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        padding: 24px;
+        text-align: center;
+    }
+
+    .expo h2 {
+        color: #34495e;
+        margin-bottom: 18px;
+        font-size: 1.3rem;
+    }
+
+    .expo img {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+        margin-top: 8px;
+        max-width: 100%;
+        height: auto;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Lista coches</h1>
+      <select name="" id="desplegable"></select>
+    </div>
+    <div class="expo"></div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    let url = "https://apiclientesxml.azurewebsites.net";
+    let request = "/api/Clientes/GetCochesXML";
+
+    $(document).ready(function () {
+      let html = "";
+      $.get(url + request, function (data) {
+        $(data)
+          .find("coche")
+          .each(function () {
+            let idCoche = $(this).attr("idcoche");
+            let marca = $(this).find("marca").text();
+            let $option = $("<option>");
+            $option.attr("value", idCoche).text(marca);
+            $("#desplegable").append($option);
+          });
+      });
+    });
+
+    $(document).ready(function () {
+      $("#desplegable").change(function () {
+        let valorSeleccionado = $("#desplegable").val();
+        let filter = "coche[idcoche=" + valorSeleccionado + "]";
+
+        $.get(url + request, function (data) {
+          $(data)
+            .find(filter)
+            .each(function () {
+              let marca = $(this).find("marca").text();
+              let modelo = $(this).find("modelo").text();
+              let imagen = $(this).find("imagen").text();
+
+              let $div = $("<div>");
+              let $h2 = $("<h2>").text(marca + " " + modelo);
+              let $img = $("<img>")
+                .attr("src", imagen)
+                .attr("alt", marca + " " + modelo);
+
+              $div.append($h2).append($img);
+              $(".expo").html($div);
+            });
+        });
+      });
+    });
+  </script>
+</html>
