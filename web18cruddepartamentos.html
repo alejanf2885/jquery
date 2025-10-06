@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Departamentos</title>
+  </head>
+  <body>
+    <h1>Crud departamentos XML</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Localidad</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+
+    let url = 'https://apicruddepartamentosxml.azurewebsites.net'
+
+    $(document).ready(function () {
+        loadDepartamentos();
+    });
+    
+
+    function loadDepartamentos() {
+        let request = '/api/Departamentos'
+
+        $.get(url + request, function(data){
+            let html = ''
+            $(data).find('Departamento').each(function(){
+                let id = $(this).find('IdDepartamento').text();
+                let nombre = $(this).find('Nombre').text();
+                let localidad = $(this).find('Localidad').text();
+
+
+                html += '<tr>'
+                html += '<td>' + id +'</td>' 
+                html += '<td>' + nombre +'</td>' 
+                html += '<td>' + localidad +'</td>' 
+                html += '</tr>'
+            })
+
+            $('#list').html(html)
+
+        })
+
+    }
+  </script>
+</html>
