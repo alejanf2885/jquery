@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alumnos</title>
+  </head>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 48px 16px;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .search {
+      background: #fff;
+      padding: 24px 32px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .search label {
+      font-size: 1.1rem;
+      color: #333;
+      margin-right: 8px;
+    }
+
+    .search input[type="number"] {
+      padding: 8px 32px;
+      border: 1px solid #b0b0b0;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .search input[type="number"]:focus {
+      border: 1.5px solid #4a90e2;
+    }
+
+    .search button {
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search button:hover {
+      background: #357ab8;
+    }
+
+    .tableAlumno {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      border-collapse: collapse;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+      background: #fff;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .tableAlumno th,
+    .tableAlumno td {
+      padding: 14px 18px;
+      text-align: center;
+    }
+
+    .tableAlumno th {
+      background: #4a90e2;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+    }
+
+    .tableAlumno tr:nth-child(even) {
+      background: #f0f4fa;
+    }
+
+    .tableAlumno tr:hover {
+      background: #e3eefa;
+      cursor: pointer;
+    }
+
+    .tableAlumno {
+      width: 50%;
+      border-radius: 10px;
+      border: 1px gray;
+      text-align: center;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <div class="search">
+        <label for="">Introduzca nota</label>
+        <input type="number" min="0" max="10" id="nota" />
+        <button id="buscar">Buscar alumnos</button>
+      </div>
+
+      <table class="tableAlumno">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Nota</th>
+          </tr>
+        </thead>
+        <tbody id="tablaAlumnos"></tbody>
+      </table>
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#buscar").click(function () {
+        $.get("documents/alumnos.xml", function (data) {
+          let html = "";
+
+          let notaInput = $("#nota").val();
+
+          $(data)
+            .find("alumno")
+            .filter(function () {
+              let nota = parseFloat($(this).find("nota").text());
+              return nota >= notaInput;
+            })
+            .each(function () {
+              let nombre = $(this).find("nombre").text();
+              let apellidos = $(this).find("apellidos").text();
+              let nota = parseFloat($(this).find("nota").text());
+
+              html += "<tr>";
+              html += "<td>" + nombre + "</td>";
+              html += "<td>" + apellidos + "</td>";
+              html += "<td>" + nota + "</td>";
+              html += "</tr>";
+
+
+              //Se puede hacer tambien con el if dentro
+
+              //   let nota = parseFloat($(this).find("nota").text());
+
+              //   if (notaInput <= nota) {
+              //     let nombre = $(this).find("nombre").text();
+              //     let apellidos = $(this).find("apellidos").text();
+
+              //     html += "<tr>";
+              //     html += "<td>" + nombre + "</td>";
+              //     html += "<td>" + apellidos + "</td>";
+              //     html += "<td>" + nota + "</td>";
+              //     html += "</tr>";
+              //   }
+            });
+          $("#tablaAlumnos").html(html);
+        });
+      });
+    });
+  </script>
+</html>
