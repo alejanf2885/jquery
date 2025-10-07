@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Departamentos</title>
+  </head>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    #listDep {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    .dep {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        margin-bottom: 16px;
+        padding: 18px 22px;
+        transition: box-shadow 0.2s;
+    }
+
+    .dep:hover {
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.16);
+    }
+
+    .dep p {
+        margin: 6px 0;
+        font-size: 1.08em;
+        color: #34495e;
+    }
+  </style>
+  <body>
+    <h1>Departamentos</h1>
+    <div id="listDep"></div>
+  </body>
+
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    let url = "https://apicruddepartamentospgs.azurewebsites.net/";
+    $(document).ready(function () {
+      loadDep();
+    });
+
+    function loadDep() {
+      let request = "webresources/departamentos";
+        $('#listDep').empty()
+      $.ajax({
+        url: url + request,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+          $.each(data, function (index, departamento) {
+            let $div = $("<div>");
+            $div.addClass("dep");
+            let $numero = $("<p>", { text: departamento.numero });
+            let $nombre = $("<p>", { text: departamento.nombre });
+            let $localidad = $("<p>", { text: departamento.localidad });
+            let $button = $("<button>", { text: 'eliminar', class: 'buttondelete', id: 'buttondelete' });
+            
+                $($button).click(function(){
+                    let requestv2 = request+ '/delete/' +departamento.numero
+                    $.ajax({
+                        url:url+requestv2,
+                        method: 'DELETE',
+                        success: function(data) {
+                            console.log('ELIMINANDO')
+                            loadDep();
+                        }
+                    })
+                })
+
+             $div.append($numero, $nombre, $localidad, $button)
+             $('#listDep').append($div)
+          });
+        },
+      });
+    }
+  </script>
+</html>
