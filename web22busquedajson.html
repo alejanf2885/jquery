@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Lista jugadores</h1>
+    <select name="" id="jugadores">
+      <option value=""></option>
+    </select>
+    <div id="details">
+
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    $(document).ready(function(){
+        let url = 'documents/jugadores.json';
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data){
+                $.each(data.jugadores, function(index,player){
+                    let nombre = player.nombre;
+                    let $option = $('<option>', {'text': nombre, 'value': index});
+                    $('#jugadores').append($option)
+                })
+            }
+        })
+
+        $('#jugadores').change(function(){
+            let name = $('#jugadores').val()
+            let pos = parseInt($('#jugadores').val());
+
+         
+         
+            let html = ''
+            console.log('entro')
+            $.getJSON(url, function(data){
+               
+                 let jugador = data.jugadores[pos]
+              
+                let html = `<h2>${jugador.nombre}</h2>
+                        <p>Edad: ${jugador.edad}</p>
+                        <p>Posición: ${jugador.posicion}</p>
+                        <p>Numero: ${jugador.numero}</p>
+                        <img src="${jugador.imagen}" alt="Foto de ${jugador.nombre}">`;
+
+                  
+
+
+
+               
+                $('#details').html(html)
+            })
+          
+        })
+
+
+
+    })
+  </script>
+</html>
