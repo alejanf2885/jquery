@@ -13,7 +13,22 @@
         margin: 0;
         padding: 0;
     }
+    .buttondelete {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 18px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
+      box-shadow: 0 1px 4px rgba(44, 62, 80, 0.08);
+    }
 
+    .buttondelete:hover {
+      background-color: #c0392b;
+    }
     h1 {
         text-align: center;
         color: #2c3e50;
@@ -28,16 +43,19 @@
     }
 
     .dep {
-        background: #fff;
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        border: 1px solid gainsboro;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.16);
         margin-bottom: 16px;
         padding: 18px 22px;
         transition: box-shadow 0.2s;
     }
 
     .dep:hover {
-        box-shadow: 0 4px 16px rgba(44, 62, 80, 0.16);
+        box-shadow: 0 12px 36px rgba(44, 62, 80, 0.32);
     }
 
     .dep p {
@@ -72,7 +90,7 @@
             let $numero = $("<p>", { text: departamento.numero });
             let $nombre = $("<p>", { text: departamento.nombre });
             let $localidad = $("<p>", { text: departamento.localidad });
-            let $button = $("<button>", { text: 'eliminar', class: 'buttondelete', id: 'buttondelete' });
+            let $button = $("<button>", { text: 'Eliminar', class: 'buttondelete', id: 'buttondelete' });
             
                 $($button).click(function(){
                     let requestv2 = request+ '/delete/' +departamento.numero

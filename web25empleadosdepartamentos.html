@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Empleados</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    #listDep {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .dep {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .dep p {
+      margin: 4px 0;
+      font-size: 15px;
+      color: #444;
+    }
+    .buttonMore {
+      margin-top: 10px;
+      padding: 6px 14px;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .buttonMore:hover {
+      background: #1565c0;
+    }
+    .listEmp {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      text-align: center;
+    }
+    th,
+    td {
+      padding: 10px 8px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+    th {
+      background: #1976d2;
+      color: #fff;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+  <body>
+    <h1>Lista de departamentos</h1>
+    <div id="listDep"></div>
+    <div class="listEmp">
+      <table>
+        <thead>
+          <tr>
+            <th>Apellido</th>
+            <th>Oficio</th>
+            <th>Salario</th>
+            <th>Departamento</th>
+          </tr>
+        </thead>
+        <tbody id="tablaEmp"></tbody>
+      </table>
+    </div>
+  </body>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    let urlDep = "https://apicruddepartamentospgs.azurewebsites.net/";
+    let urlEmp = "https://apiempleadosspgs.azurewebsites.net/";
+
+    $(document).ready(function () {
+      loadDep();
+    });
+
+    function loadDep() {
+      let request = "webresources/departamentos";
+      $("#listDep").empty();
+
+      $.ajax({
+        url: urlDep + request,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+          $.each(data, function (index, departamento) {
+            let $div = $("<div>");
+            $div.addClass("dep");
+
+            let $numero = $("<p>", { text: departamento.numero });
+            let $nombre = $("<p>", { text: departamento.nombre });
+            let $localidad = $("<p>", { text: departamento.localidad });
+            let $button = $("<button>", {
+              text: "Ver empleados",
+              class: "buttonMore",
+              id: "buttonMore",
+            });
+
+            //Ver empleados
+            $button.click(function () {
+              let requestEmp =
+                "api/Empleados/EmpleadosDepartamento/" + departamento.numero;
+              $("#tablaEmp").html("");
+              $.ajax({
+                url: urlEmp + requestEmp,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                  let html = "";
+                  $.each(data, function (index, empleado) {
+                    let apellido = empleado.apellido;
+                    let oficio = empleado.oficio;
+                    let salario = empleado.salario;
+                    let departamento = empleado.departamento;
+
+                    html += `<tr>
+                                <td>${apellido}</td>
+                                <td>${oficio}</td>
+                                <td>${salario}</td>
+                                <td>${departamento}</td>
+                            </tr>`;
+                  });
+
+                  $("#tablaEmp").html(html);
+                },
+              });
+            });
+
+            $div.append($numero, $nombre, $localidad, $button);
+            $("#listDep").append($div);
+          });
+        },
+      });
+    }
+  </script>
+</html>
