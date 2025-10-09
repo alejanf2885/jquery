@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospitales</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm py-3">
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center gap-2"
+          href="web27.html"
+        >
+          <i class="bi bi-hospital fs-4"></i>
+          Hospitales
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active fw-bold d-flex align-items-center gap-1"
+                href="web27.html"
+                aria-current="page"
+              >
+                <i class="bi bi-house-door-fill"></i>
+                Inicio
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active fw-bold d-flex align-items-center gap-1"
+                href="web29Insert.html"
+                aria-current="page"
+              >
+                <i class="bi bi-plus-circle-fill"></i>
+                Insertar
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-5">
+      <h1 class="text-center mb-4 text-primary fw-bold">Modificar Hospital</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <form class="card p-4 shadow-sm" id="formHosp">
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                placeholder="Nombre del hospital"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label fw-bold"
+                >Dirección</label
+              >
+              <input
+                type="text"
+                id="direccion"
+                class="form-control"
+                placeholder="Dirección"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label fw-bold">Teléfono</label>
+              <input
+                type="text"
+                id="telefono"
+                class="form-control"
+                placeholder="Teléfono"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="camas" class="form-label fw-bold">Camas</label>
+              <input
+                type="number"
+                id="camas"
+                class="form-control"
+                placeholder="Número de camas"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary w-100 fw-bold">
+              <i class="bi bi-plus-circle-fill"></i> Modificar Hospital
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-3.7.1.js"></script>
+  <script>
+    let url = "https://apicrudhospital.azurewebsites.net/";
+    $(document).ready(function () {
+      let params = new window.URLSearchParams(window.location.search);
+
+      let id = params.get("id");
+      let request = "/webresources/hospitales/" + id;
+      let hospital = new Object();
+      
+
+      //Buscar hospital
+      $.ajax({
+        url: url + request,
+        method: "GET",
+        data: "json",
+        success: function (data) {
+        
+          hospital.idhospital = data.idhospital;
+          hospital.nombre = data.nombre;
+          hospital.direccion = data.direccion;
+          hospital.telefono = data.telefono;
+          hospital.camas = data.camas;
+
+          $("#nombre").val(hospital.nombre);
+          $("#direccion").val(hospital.direccion);
+          $("#telefono").val(hospital.telefono);
+          $("#camas").val(hospital.camas);
+        },
+      });
+
+      $("#formHosp").submit(function (e) {
+        //Modificar  Hospitales
+        e.preventDefault();
+        let requestM = "webresources/hospitales/put";
+        console.log(hospital.idhospital)
+
+        let idM = hospital.idhospital;
+        let nombreM = $("#nombre").val();
+        let direccionM = $("#direccion").val();
+        let telefonoM = $("#telefono").val();
+        let camasM = parseInt($("#camas").val());
+
+        let hospitalM = new Object();
+        hospitalM.idhospital = idM;
+        hospitalM.nombre = nombreM;
+        hospitalM.direccion = direccionM;
+        hospitalM.telefono = telefonoM;
+        hospitalM.camas = camasM;
+
+        let hospitalJSON = JSON.stringify(hospitalM);
+        console.log('Hospital a enviar: '+ hospitalJSON)
+
+        $.ajax({
+            url: url +requestM,
+            method: 'PUT',
+            data: hospitalJSON,
+            contentType: 'application/json',
+            success: function(){
+                 window.location.href = "web27.html"; 
+            }
+        })
+        console.log(hospitalJSON);
+      });
+    });
+  </script>
+</html>
